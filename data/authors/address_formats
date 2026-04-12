@@ -1,2 +1,2 @@
 [en-us]
-  format = "{street}\n{city}, {region} {postcode}\n{country}"
+  format = "{Universidade do Vale do Para\'iba, Av. Shishima Hifumi, 2911}\n{São José dos Campos}, {SP} {CEP: 12244-000}\n{Brazil}"
