@@ -24,6 +24,12 @@ links:
   - icon: at-symbol
     url: mailto:mrkrmh@gmail.com
     label: E-mail Me
+    - icon: academicons/ads
+    url: https://ui.adsabs.harvard.edu/user/libraries/P6SVIBZlTSWgun6-MmX0zw
+    label: ADS Library
+    - icon: academicons/researchgate
+    url: https://www.researchgate.net/profile/Mark-Armah-4
+    label: ResearchGate
   - icon: academicons/lattes
     url: http://lattes.cnpq.br/2291972087838064
   - icon: brands/github
