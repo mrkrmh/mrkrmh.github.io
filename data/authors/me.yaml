@@ -2,115 +2,124 @@ schema: hugoblox/author/v1
 slug: me
 is_owner: true
 name:
-  display: Dr. Alex Johnson
-  given: Alex
-  family: Johnson
-  alternate: ''  # Example: 王伟
-  pronunciation: ''  # Example: Wáng Wěi
+  display: Dr. Mark Armah
+  given: Mark
+  family: Armah
+  alternate: ''  
+  pronunciation: ''  
   pronouns: he/him
 postnominals:
   - PhD
-  - MIEEE
 status:
-  icon: "☕️"
-role: Senior AI Research Scientist
+  icon: "🔭"
+role: FAPESP Postdoctoral Researcher
 bio: |
-  Alex Johnson is a Senior AI Research Scientist at Meta AI. His research
-  has been published in top conferences like NeurIPS and ICML, with over
-  10,000 citations. Alex is passionate about pushing the boundaries of AI
-  while ensuring ethical development.
+  Postdoctoral researcher with over 4 years of research experience in the chemical composition of galaxies. My research focuses on active galactic nuclei (AGNs), investigating the interplay between gas inflow, outflow, and consumption, and how it impacts key aspects of galaxy evolution.
 
 affiliations:
-  - name: Meta AI
-    url: https://ai.meta.com/
+  - name: Universidade do Vale do Paraíba (UNIVAP)
+    url: https://www.univap.br/
 
 links:
   - icon: at-symbol
-    url: mailto:alex.johnson@example.com
+    url: mailto:mrkrmh@gmail.com
     label: E-mail Me
-  - icon: brands/x
-    url: https://x.com/example
+  - icon: academicons/lattes
+    url: http://lattes.cnpq.br/2291972087838064
   - icon: brands/github
-    url: https://github.com/example
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/in/example/
+    url: https://github.com/mrkrmh
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?user=example
+    url: https://scholar.google.com/ # INSERT YOUR LINK HERE
   - icon: academicons/orcid
-    url: https://orcid.org/0000-0002-1825-0097
+    url: https://orcid.org/ # INSERT YOUR LINK HERE
 
 interests:
-  - Large Language Models
-  - Computer Vision
-  - Reinforcement Learning
-  - AI Ethics
+  - Active Galactic Nuclei (AGNs)
+  - Seyfert Galaxies
+  - Chemical Composition of Galaxies
+  - Photoionization Modeling
 
 education:
-  - degree: PhD Computer Science
-    institution: Stanford University
-    start: 2015-09-01
-    end: 2019-06-30
+  - degree: PhD in Astrophysics
+    institution: Universidade Federal do Rio Grande do Sul (UFRGS)
+    start: 2020-01-01
+    end: 2025-01-31
     summary: |
-      Thesis on scaling laws for neural language models. Published 5 papers in NeurIPS and ICML.
+      Thesis title: Gas-phase metallicity in Seyfert galaxies. Supervisor: Prof. Rogério Riffel. GRADE: A
     button:
-      text: Download dissertation
-      url: /resume.pdf
+      text: Download Thesis
+      url: '' # ADD LINK IF AVAILABLE
       icon: hero/arrow-down-tray
-  - degree: MS Computer Science
-    institution: Carnegie Mellon University
-    start: 2013-09-01
-    end: 2015-05-31
-  - degree: BS Computer Science
-    institution: MIT
-    start: 2009-09-01
-    end: 2013-05-31
+  - degree: MSc in Physics & Astronomy
+    institution: Universidade do Vale do Paraíba (UNIVAP)
+    start: 2018-09-01
+    end: 2020-10-31
+    summary: |
+      Thesis title: Ne2+/H+ abundance of Seyfert 2s based on optical and IR emissions. Supervisor: Prof. Oli Luiz Dors Junior.
+  - degree: BSc in Mechanical Engineering
+    institution: University of Mines and Technology (UMaT)
+    start: 2009-08-01
+    end: 2013-06-30
 
 experience:
-  - role: Senior AI Research Scientist
-    org: Meta AI
-    start: 2020-01-01
+  - role: FAPESP Postdoctoral Researcher
+    org: Universidade do Vale do Paraíba (UNIVAP)
+    start: 2025-02-01
     summary: |
-      Leading research on multimodal AI systems. Contributed to Llama 2 and other open-source models.
-    button:
-      text: View portfolio
-      url: /
-      icon: hero/arrow-down-tray
-  - role: AI Research Intern
-    org: OpenAI
-    start: 2019-06-01
-    end: 2019-12-31
+      Developing custom Python pipelines to analyze multi-dimensional spectroscopic datasets and constructing comprehensive CLOUDY photoionization model grids to map the physical conditions of narrow-line regions in AGNs.
+  - role: Teaching Assistant (Galactic & Extragalactic Astronomy)
+    org: Universidade Federal do Rio Grande do Sul
+    start: 2022-11-01
+    end: 2023-04-30
     summary: |
-      Worked on GPT-3 scaling. Co-authored paper on prompt engineering.
+      Facilitated interactive learning and mentored undergraduate students in complex astrophysical concepts.
+  - role: Teaching Assistant (Solid Mechanics)
+    org: Universidade do Vale do Paraíba
+    start: 2019-09-01
+    end: 2020-03-31
 
 skills:
-  - name: Technical Skills
+  - name: Programming & Data Analysis
     items:
       - label: Python
         level: 5
-      - label: Machine Learning
+      - label: Data Visualization
         level: 5
-      - label: Cloud Computing
+      - label: MYSQL
         level: 4
-  - name: Research & Communication
+  - name: Astrophysical Software
     items:
-      - label: Academic Writing
+      - label: CLOUDY Code
         level: 5
-      - label: Conference Presentations
+      - label: PPXF / STARLIGHT
         level: 4
-      - label: Grant Proposals
+      - label: PYRAF/IRAF
         level: 4
+  - name: Publishing & OS
+    items:
+      - label: LaTeX
+        level: 5
+      - label: Linux/Unix
+        level: 5
 
 languages:
-  - name: English
+  - name: Akan
     level: 5
     label: Native
-  - name: Spanish
-    level: 4
-    label: Fluent
+  - name: English
+    level: 5
+    label: Proficient
+  - name: Portuguese
+    level: 3
+    label: Intermediate
 
 awards:
-  - title: Best Paper Award
-    awarder: NeurIPS
-    date: "2022-12-01"
-    summary: Awarded for groundbreaking work on efficient training of large models.
+  - title: CAPES PhD Scholarship
+    awarder: CAPES
+    date: "2020-12-01"
+    summary: R$131.600,00 awarded for PhD research.
     icon: hero/trophy
+  - title: Young Researcher Travel Support
+    awarder: AGN Winds on the Chesapeake
+    date: "2023-09-01"
+    icon: hero/academic-cap
