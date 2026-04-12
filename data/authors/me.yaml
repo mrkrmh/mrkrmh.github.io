@@ -29,9 +29,9 @@ links:
   - icon: brands/github
     url: https://github.com/mrkrmh
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/ # INSERT YOUR LINK HERE
+    url: https://scholar.google.com.br/citations?user=QPfeYDQAAAAJ&hl=en
   - icon: academicons/orcid
-    url: https://orcid.org/ # INSERT YOUR LINK HERE
+    url: https://orcid.org/0000-0002-9746-3938
 
 interests:
   - Active Galactic Nuclei (AGNs)
