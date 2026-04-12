@@ -7,12 +7,12 @@ name:
   family: Armah
   alternate: ''  
   pronunciation: ''  
-  pronouns: he/him
+  pronouns: He/Him
 postnominals:
   - PhD
 status:
   icon: "🔭"
-role: FAPESP Postdoctoral Researcher
+role: Postdoctoral Fellow
 bio: |
   Postdoctoral researcher with over 4 years of research experience in the chemical composition of galaxies. My research focuses on active galactic nuclei (AGNs), investigating the interplay between gas inflow, outflow, and consumption, and how it impacts key aspects of galaxy evolution.
 
@@ -38,7 +38,7 @@ links:
   - icon: academicons/orcid
     url: https://orcid.org/0000-0002-9746-3938
 
-interests:
+research interests:
   - Active Galactic Nuclei (AGNs)
   - Seyfert Galaxies
   - Chemical Composition of Galaxies
