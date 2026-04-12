@@ -287,3 +287,10 @@ hugoblox:
     # Affiliate referral code for rewards program
     # Join affiliate program: https://hugoblox.com/affiliates
     affiliate_code: ""
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # PUBLICATIONS
+  # ────────────────────────────────────────────────────────────────────────────
+  publications:
+    # Highlight your name in the author list
+    highlight_author: ["Mark Armah", "Armah, M.", "Armah, Mark"]
