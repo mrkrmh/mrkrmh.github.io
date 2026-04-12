@@ -42,9 +42,9 @@ sections:
       title: '📚 My Research'
       subtitle: ''
       text: |-
-        Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
-
-        I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
+        I am a FAPESP postdoctoral researcher at **Universidade do Vale do Paraíba (UNIVAP)** investigating the chemical composition of galaxies. My research focuses on **Active Galactic Nuclei (AGNs)**, specifically Seyfert galaxies, and the interplay between gas inflow, outflow, and consumption.
+        
+        Using the **Cloudy** spectral synthesis code and photoionization models, I develop metallicity calibrations to accurately determine the chemical abundances in ionized gas. I am particularly interested in how these processes impact galaxy evolution across cosmic time.
 
         Please reach out to collaborate 😃
     design:
