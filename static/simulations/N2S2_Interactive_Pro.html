@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N2S2 Interactive Diagnostic Simulator</title>
+    
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\(', '\)']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #f2f4f7;
+            --card-color: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --purple: #8246af;
+            --blue: #1a56db;
+            --red: #c52222;
+            --track: #e2e2e2;
+            --border: #e5e7eb;
+        }
+        body { background-color: var(--bg-color); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; padding: 2rem; margin: 0; color: var(--text-dark); }
+        .card { background: var(--card-color); border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); width: 100%; max-width: 950px; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: flex-start; }
+        .title-area { max-width: 65%; }
+        h1 { margin: 0 0 0.5rem 0; font-size: 1.6rem; color: var(--text-dark); }
+        p { font-size: 0.95rem; color: #4b5563; line-height: 1.5; margin: 0; }
+        
+        .metrics { display: flex; gap: 1.5rem; }
+        .metric-card { background: #f9fafb; border: 1px solid var(--border); padding: 10px 15px; border-radius: 8px; text-align: center; min-width: 100px; }
+        .metric-label { font-size: 0.7rem; font-weight: 800; color: var(--text-light); margin-bottom: 4px; }
+        .metric-value { font-size: 1.2rem; font-weight: bold; font-family: 'Courier New', Courier, monospace; }
+        
+        hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+        /* Visualization Area */
+        .canvas-area { background: #f8fafc; border-radius: 12px; padding: 2.5rem 2rem; position: relative; height: 100px; display: flex; align-items: center; border: 1px inset #f1f5f9; }
+        .agn-source { width: 25px; height: 25px; background: var(--text-dark); border: 3px solid white; border-radius: 50%; box-shadow: 0 0 35px 15px #fcd34d; position: relative; z-index: 10; }
+        .agn-label { position: absolute; bottom: 10px; left: 20px; background: white; border: 1.5px solid var(--text-dark); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+        .arrows { display: flex; flex-direction: column; gap: 8px; margin: 0 25px; color: #fbbf24; font-size: 1.2rem; }
+        
+        .cloud { display: flex; height: 80px; width: 65%; position: relative; }
+        .inner-zone { width: 30%; background: var(--purple); border: 2px solid #4b5563; border-right: none; }
+        .piz-zone { width: 25%; background: var(--blue); border: 2px solid #4b5563; border-left: none; position: relative; }
+        .piz-zone::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(45deg, var(--red), var(--red) 10px, transparent 10px, transparent 20px); opacity: 0.8; }
+        .zone-labels { position: absolute; top: -30px; display: flex; width: 100%; font-size: 0.8rem; font-weight: bold; }
+
+        /* Bars Area */
+        .bar-container { margin-bottom: 1.2rem; position: relative; }
+        .bar-label { font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 500; }
+        .track { background: var(--track); height: 28px; border-radius: 6px; width: 85%; overflow: hidden; display: flex; }
+        .fill { height: 100%; transition: width 0.05s linear; }
+        .fill-text { position: absolute; right: 0; top: 22px; font-family: 'Courier New', Courier, monospace; font-size: 1rem; font-weight: bold; width: 14%; text-align: left; }
+        #fill-n2 { background: var(--blue); }
+        #fill-s2 { background: var(--red); }
+
+        /* Controls Area */
+        .controls { background: #f8fafc; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); }
+        .control-row { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 1rem; }
+        
+        .play-btn { 
+            background: var(--text-dark); color: white; border: none; border-radius: 8px; 
+            padding: 10px 20px; font-weight: bold; cursor: pointer; min-width: 100px;
+            transition: background 0.2s;
+        }
+        .play-btn:hover { background: var(--blue); }
+        
+        input[type=range] { flex-grow: 1; accent-color: var(--blue); cursor: pointer; }
+        .val-box { background: white; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-family: monospace; width: 50px; text-align: center; }
+
+        .btn-group { display: flex; gap: 0.4rem; }
+        .pill { 
+            background: white; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; 
+            cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;
+        }
+        .pill.active { background: var(--blue); color: white; border-color: var(--blue); box-shadow: 0 2px 4px rgba(26, 86, 219, 0.3); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <div class="title-area">
+            <h1>N2S2 AGN Diagnostic Simulator</h1>
+            <p>Demonstrating how line intensity ratios cancel out volume effects in the Partially Ionized Zone (\mathrm{(PIZ)}). Use <b>PLAY</b> to sweep luminosity while changing physical parameters.</p>
+        </div>
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-label">$\mathrm{LOG}\ L_{\mathrm{X}}$</div>
+                <div class="metric-value" id="met-lx">40.0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">$\mathrm{PIZ}\ (\mathrm{pc})$</div>
+                <div class="metric-value" id="met-piz">190.0</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--blue); background: #eff6ff;">
+                <div class="metric-label" style="color: var(--blue);">$\mathrm{N2S2\ RATIO}$</div>
+                <div class="metric-value" id="met-ratio">0.45</div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="canvas-area">
+        <div class="agn-source"></div>
+        <div class="agn-label">AGN SOURCE</div>
+        <div class="arrows"><span>&raquo;</span><span>&raquo;</span></div>
+        <div class="cloud">
+            <div class="zone-labels">
+                <span style="width: 30%">$\mathrm{H}^{+},\ \mathrm{O}^{2+}$</span>
+                <span>$\bullet\ \mathrm{PIZ:}\ \mathrm{N}^{+}\ \&\ \mathrm{S}^{+}\ \mathrm{Zone}$</span>
+            </div>
+            <div class="inner-zone"></div>
+            <div class="piz-zone" id="piz-box"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="bar-container">
+        <div class="bar-label">$[\mathrm{N\,\scriptstyle{II}}]\ \lambda\lambda 6548, 6584$ Intensity</div>
+        <div class="track"><div class="fill" id="fill-n2"></div></div>
+        <span class="fill-text" id="txt-n2">45</span>
+    </div>
+    <div class="bar-container" style="margin-bottom: 2rem;">
+        <div class="bar-label">$[\mathrm{S\,\scriptstyle{II}}]\ \lambda\lambda 6716, 6731$ Intensity</div>
+        <div class="track"><div class="fill" id="fill-s2"></div></div>
+        <span class="fill-text" id="txt-s2">100</span>
+    </div>
+
+    <div class="controls">
+        <div class="control-row">
+            <button class="play-btn" id="play-btn">PLAY &#9654;</button>
+            <input type="range" id="slider" min="38" max="48" step="0.1" value="40">
+            <div class="val-box" id="slider-val">40.0</div>
+        </div>
+        
+        <div style="display: flex; gap: 3rem; justify-content: center; border-top: 1px solid var(--border); padding-top: 1rem;">
+            <div>
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.6rem;">$\mathrm{METALLICITY}\ (Z/Z_{\odot})$</div>
+                <div class="btn-group" id="z-group">
+                    <div class="pill" data-val="1.0">0.5</div>
+                    <div class="pill active" data-val="2.0">1.0</div>
+                    <div class="pill" data-val="4.0">2.0</div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.6rem;">$\mathrm{DENSITY}\ (N_{\mathrm{e}})$</div>
+                <div class="btn-group" id="ne-group">
+                    <div class="pill active" data-val="1.0">100</div>
+                    <div class="pill" data-val="1.1">1000</div>
+                    <div class="pill" data-val="1.6">10000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const playBtn = document.getElementById('play-btn');
+    const state = { lx: 40.0, z_mult: 2.0, ne_div: 1.0, isPlaying: false, interval: null };
+
+    function updatePhysics() {
+        const pct = (state.lx - 38.0) / 10.0;
+        document.getElementById('piz-box').style.width = `${15 + (pct * 50)}%`;
+        
+        document.getElementById('slider-val').innerText = state.lx.toFixed(1);
+        document.getElementById('met-lx').innerText = state.lx.toFixed(1);
+        document.getElementById('met-piz').innerText = (10 + pct*900).toFixed(1);
+        
+        const vol = 1.0 + (pct * 8.5);
+        const n2 = 45.0 * vol * (state.z_mult / 2.0);
+        const s2 = (100.0 * vol) / state.ne_div;
+        const ratio = n2 / s2;
+        
+        document.getElementById('met-ratio').innerText = ratio.toFixed(2);
+        document.getElementById('fill-n2').style.width = `${(n2 / 1000) * 100}%`;
+        document.getElementById('txt-n2').innerText = Math.round(n2);
+        document.getElementById('fill-s2').style.width = `${(s2 / 1000) * 100}%`;
+        document.getElementById('txt-s2').innerText = Math.round(s2);
+        
+        slider.value = state.lx;
+    }
+
+    // Play/Pause Logic
+    playBtn.addEventListener('click', () => {
+        state.isPlaying = !state.isPlaying;
+        if (state.isPlaying) {
+            playBtn.innerHTML = 'PAUSE &#10074;&#10074;';
+            state.interval = setInterval(() => {
+                state.lx += 0.1;
+                if (state.lx > 48) state.lx = 38;
+                updatePhysics();
+            }, 50);
+        } else {
+            playBtn.innerHTML = 'PLAY &#9654;';
+            clearInterval(state.interval);
+        }
+    });
+
+    slider.addEventListener('input', (e) => {
+        state.lx = parseFloat(e.target.value);
+        updatePhysics();
+    });
+
+    // Pill logic
+    document.querySelectorAll('.pill').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const parent = e.target.parentElement;
+            parent.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            if (parent.id === 'z-group') state.z_mult = parseFloat(e.target.dataset.val);
+            if (parent.id === 'ne-group') state.ne_div = parseFloat(e.target.dataset.val);
+            updatePhysics();
+        });
+    });
+
+    updatePhysics();
+</script>
+
+</body>
+</html>

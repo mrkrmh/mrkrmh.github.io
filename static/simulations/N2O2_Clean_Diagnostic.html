@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N2O2 Diagnostic - Density Independent</title>
+    
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\(', '\)']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f2f4f7;
+            --card-color: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --cyan-o2: #0891b2;
+            --blue-n2: #1e40af;
+            --track: #e2e2e2;
+            --border: #e5e7eb;
+        }
+        body { background-color: var(--bg-color); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 2rem; margin: 0; color: var(--text-dark); }
+        .card { background: var(--card-color); border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); width: 100%; max-width: 950px; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: flex-start; }
+        .title-area { max-width: 65%; }
+        h1 { margin: 0 0 0.5rem 0; font-size: 1.6rem; color: var(--text-dark); }
+        p { font-size: 0.95rem; color: #4b5563; line-height: 1.5; margin: 0; }
+        
+        .metrics { display: flex; gap: 1.5rem; }
+        .metric-card { background: #f9fafb; border: 1px solid var(--border); padding: 10px 15px; border-radius: 8px; text-align: center; min-width: 100px; }
+        /* Removed text-transform: uppercase; to prevent MathJax collision */
+        .metric-label { font-size: 0.7rem; font-weight: 800; color: var(--text-light); margin-bottom: 4px; }
+        .metric-value { font-size: 1.2rem; font-weight: bold; font-family: 'Courier New', monospace; }
+        
+        hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+        .canvas-area { background: #f8fafc; border-radius: 12px; padding: 2.5rem 2rem; position: relative; height: 100px; display: flex; align-items: center; border: 1px inset #f1f5f9; }
+        .agn-source { width: 25px; height: 25px; background: var(--text-dark); border: 3px solid white; border-radius: 50%; box-shadow: 0 0 35px 15px #fcd34d; position: relative; z-index: 10; }
+        .agn-label { position: absolute; bottom: 10px; left: 20px; background: white; border: 1.5px solid var(--text-dark); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+        .arrows { display: flex; flex-direction: column; gap: 8px; margin: 0 25px; color: #fbbf24; font-size: 1.2rem; }
+        
+        .cloud { display: flex; height: 80px; width: 65%; position: relative; }
+        .inner-zone { width: 25%; background: #e5e7eb; border: 2px solid #4b5563; border-right: none; }
+        .piz-zone { width: 35%; background: var(--blue-n2); border: 2px solid #4b5563; border-left: none; position: relative; }
+        .piz-zone::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(45deg, var(--cyan-o2), var(--cyan-o2) 10px, transparent 10px, transparent 20px); opacity: 0.6; }
+        
+        .bar-container { margin-bottom: 1.2rem; position: relative; }
+        .bar-label { font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 500; }
+        .track { background: var(--track); height: 28px; border-radius: 6px; width: 85%; overflow: hidden; display: flex; }
+        .fill { height: 100%; transition: width 0.05s linear; }
+        .fill-text { position: absolute; right: 0; top: 22px; font-family: 'Courier New', monospace; font-size: 1rem; font-weight: bold; width: 14%; text-align: left; }
+        #fill-n2 { background: var(--blue-n2); }
+        #fill-o2 { background: var(--cyan-o2); }
+
+        .controls { background: #f8fafc; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); }
+        .control-row { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 1rem; }
+        
+        .play-btn { background: var(--text-dark); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: bold; cursor: pointer; min-width: 100px; }
+        input[type=range] { flex-grow: 1; accent-color: var(--cyan-o2); }
+        .val-box { background: white; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-family: monospace; width: 50px; text-align: center; }
+
+        .btn-group { display: flex; gap: 0.4rem; }
+        .pill { background: white; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+        .pill.active { background: var(--cyan-o2); color: white; border-color: var(--cyan-o2); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <div class="title-area">
+            <h1>$\mathrm{N2O2}$ Diagnostic: Total Parameter Immunity</h1>
+            <p>Demonstrating that the $\mathrm{N2O2}$ ratio is a "clean" metallicity indicator, unaffected by both X-ray luminosity (L_{\mathrm{X}}) and electron density (N_{\mathrm{e}}) in the low-density limit.</p>
+        </div>
+        <div class="metrics">
+            <div class="metric-card"><div class="metric-label">$\mathrm{LOG}\ L_{\mathrm{X}}$</div><div class="metric-value" id="met-lx">42.0</div></div>
+            <div class="metric-card" style="border-color: var(--cyan-o2); background: #ecfeff;"><div class="metric-label" style="color: var(--cyan-o2);">$\mathrm{N2O2\ RATIO}$</div><div class="metric-value" id="met-ratio">-0.34</div></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="canvas-area">
+        <div class="agn-source"></div>
+        <div class="agn-label">AGN SOURCE</div>
+        <div class="arrows"><span>&raquo;</span><span>&raquo;</span></div>
+        <div class="cloud">
+            <div style="position: absolute; top: -30px; display: flex; width: 100%; font-size: 0.8rem; font-weight: bold;">
+                <span style="width: 25%">$\mathrm{H}^{+},\ \mathrm{O}^{2+}$</span>
+                <span>$\bullet\ \mathrm{PIZ:}\ \mathrm{N}^{+}\ \&\ \mathrm{O}^{+}\ \mathrm{Zone}$</span>
+            </div>
+            <div class="inner-zone"></div>
+            <div class="piz-zone" id="piz-box"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="bar-container">
+        <div class="bar-label">$[\mathrm{N\,\scriptstyle{II}}]\ \lambda\lambda 6548, 6584$ Intensity</div>
+        <div class="track"><div class="fill" id="fill-n2"></div></div>
+        <span class="fill-text" id="txt-n2">150</span>
+    </div>
+    <div class="bar-container" style="margin-bottom: 2rem;">
+        <div class="bar-label">$[\mathrm{O\,\scriptstyle{II}}]\ \lambda\lambda 3726, 3729$ Intensity</div>
+        <div class="track"><div class="fill" id="fill-o2"></div></div>
+        <span class="fill-text" id="txt-o2">330</span>
+    </div>
+
+    <div class="controls">
+        <div class="control-row">
+            <button class="play-btn" id="play-btn">PLAY &#9654;</button>
+            <input type="range" id="slider" min="38" max="48" step="0.1" value="42">
+            <div class="val-box" id="slider-val">42.0</div>
+        </div>
+        
+        <div style="display: flex; gap: 3rem; justify-content: center; border-top: 1px solid var(--border); padding-top: 1rem;">
+            <div>
+                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.6rem;">$\mathrm{METALLICITY}\ (Z/Z_{\odot})$</div>
+                <div class="btn-group" id="z-group">
+                    <div class="pill" data-val="0.5">0.5</div><div class="pill active" data-val="1.0">1.0</div><div class="pill" data-val="2.0">2.0</div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.6rem;">$\mathrm{DENSITY}\ (N_{\mathrm{e}})$</div>
+                <div class="btn-group" id="ne-group">
+                    <div class="pill" data-val="1">100</div><div class="pill active" data-val="10">1000</div><div class="pill" data-val="50">5000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const playBtn = document.getElementById('play-btn');
+    const state = { lx: 42.0, z_val: 1.0, ne_mult: 10, isPlaying: false, interval: null };
+
+    function updatePhysics() {
+        const pct = (state.lx - 38.0) / 10.0;
+        document.getElementById('piz-box').style.width = `${15 + (pct * 55)}%`;
+        document.getElementById('slider-val').innerText = state.lx.toFixed(1);
+        document.getElementById('met-lx').innerText = state.lx.toFixed(1);
+        
+        const vol = 1.0 + (pct * 9.0);
+        
+        // Intensity scales linearly with density and volume, but ratio is constant
+        const n2 = 150 * vol * state.z_val * (state.ne_mult / 10);
+        const o2 = 330 * vol * (state.ne_mult / 10);
+
+        const ratio = n2 / o2; 
+        document.getElementById('met-ratio').innerText = ratio.toFixed(2);
+        
+        // DYNAMIC VISUAL SCALING: 
+        // We scale the visual width against the max possible O2 at the *current* density.
+        // Max volume is 10.0. Max O2 base is 330.
+        const max_o2_at_current_density = 330 * 10.0 * (state.ne_mult / 10);
+        
+        document.getElementById('fill-n2').style.width = `${(n2 / max_o2_at_current_density) * 100}%`;
+        document.getElementById('txt-n2').innerText = Math.round(n2);
+        
+        document.getElementById('fill-o2').style.width = `${(o2 / max_o2_at_current_density) * 100}%`;
+        document.getElementById('txt-o2').innerText = Math.round(o2);
+        
+        slider.value = state.lx;
+    }
+
+    playBtn.addEventListener('click', () => {
+        state.isPlaying = !state.isPlaying;
+        if (state.isPlaying) {
+            playBtn.innerHTML = 'PAUSE';
+            state.interval = setInterval(() => { state.lx += 0.1; if (state.lx > 48) state.lx = 38; updatePhysics(); }, 50);
+        } else {
+            playBtn.innerHTML = 'PLAY';
+            clearInterval(state.interval);
+        }
+    });
+
+    slider.addEventListener('input', (e) => { state.lx = parseFloat(e.target.value); updatePhysics(); });
+
+    document.querySelectorAll('.pill').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const parent = e.target.parentElement;
+            parent.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+            e.target.classList.add('active');
+            if (parent.id === 'z-group') state.z_val = parseFloat(e.target.dataset.val);
+            if (parent.id === 'ne-group') state.ne_mult = parseFloat(e.target.dataset.val);
+            updatePhysics();
+        });
+    });
+
+    updatePhysics();
+</script>
+</body>
+</html>
