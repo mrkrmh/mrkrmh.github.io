@@ -295,7 +295,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   # PUBLICATIONS
   # ────────────────────────────────────────────────────────────────────────────
-  publications:
+  publication:
     # Highlight your name in the author list
     # Use exact strings as they appear in your BibTeX or Markdown files
     highlight_author: 
