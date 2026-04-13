@@ -14,7 +14,7 @@ hugoblox:
   identity:
     # Site name - shown in navbar, footer, copyright, and browser title by default
     name: "Mark Armah"
-    # To activate paa_pix.jpeg as your profile picture add these 3 lines below:
+    # To activate pass_pix.jpeg as your profile picture add these 3 lines below:
     avatar:
       image: "pass_pix.jpeg"
       shape: circle # Options: circle, square, rounded
