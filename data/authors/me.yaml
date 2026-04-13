@@ -1,11 +1,18 @@
 schema: hugoblox/author/v1
 slug: me
+# Add this near the top, under slug: me
+avatar:
+  url: "avatar.jpg"
 is_owner: true
 name:
   display: Mark Armah
   given: Mark
   family: Armah
-  alternate: ''  
+# Add these lines below:
+alternate_names:
+  - "Mark Armah"
+  - "Armah, Mark"
+  - "Armah, M." 
   pronunciation: ''  
   pronouns: He/Him
 postnominals:
