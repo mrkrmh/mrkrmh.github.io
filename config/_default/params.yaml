@@ -297,4 +297,8 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   publications:
     # Highlight your name in the author list
-    highlight_author: ["Mark Armah", "Armah, M.", "Armah, Mark"]
+    # Use exact strings as they appear in your BibTeX or Markdown files
+    highlight_author: 
+      - "Mark Armah"
+      - "Armah, Mark"
+      - "Armah, M."
