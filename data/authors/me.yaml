@@ -8,12 +8,12 @@ name:
   display: Mark Armah
   given: Mark
   family: Armah
-# Add these lines below:
-alternate_names:
-  - "Mark Armah"
-  - "Armah, Mark"
-  - "Armah, M." 
-  pronunciation: ''  
+  alternate_names:
+    - "Mark Armah"
+    - "Armah, Mark"
+    - "Armah, M."
+  # Move these back to the left to align with 'display'
+  pronunciation: ''
   pronouns: He/Him
 postnominals:
   - PhD
