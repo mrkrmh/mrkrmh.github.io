@@ -6,6 +6,9 @@ title: Mark Armah
 authors:
   - me
 
-# This line is crucial - it tells the theme to look for the avatar
+# Is this the main user of the site?
 superuser: true
+
+# Role/Position
+role: Postdoctoral Fellow
 ---
