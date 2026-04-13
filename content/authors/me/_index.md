@@ -2,13 +2,16 @@
 # Display name
 title: Mark Armah
 
-# Username (this must match the folder name)
+# Username
 authors:
   - me
 
-# Is this the main user of the site?
-superuser: true
+# This is the "secret" to bolding in publications
+names:
+  - "Mark Armah"
+  - "Armah, Mark"
+  - "Armah, M."
 
-# Role/Position
+superuser: true
 role: Postdoctoral Fellow
 ---
