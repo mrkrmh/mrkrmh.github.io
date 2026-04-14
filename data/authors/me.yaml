@@ -20,7 +20,7 @@ status:
   icon: "🔭"
 role: Postdoctoral Fellow
 bio: |
-  I am an extragalactic astrophysicist specializing in the chemical evolution of Active Galactic Nuclei (AGNs) and Seyfert galaxies. My research addresses a fundamental question in galaxy evolution: how do actively accreting supermassive black holes regulate the chemical and physical properties of their host environments? By bridging the gap between intricate multi-dimensional spectroscopic datasets and advanced theoretical photoionization models, I develop custom computational pipelines to untangle AGN radiation from true gas-phase abundances. Ultimately, my work pioneers robust new metallicity calibrations and diagnostic tools that allow wider application to decode complex AGN feedback mechanisms.
+  I am an extragalactic astrophysicist specializing in the chemical evolution of Active Galactic Nuclei (AGNs) and Seyfert galaxies. My research addresses a fundamental question in galaxy evolution: how do actively accreting supermassive black holes regulate the chemical and physical properties of their host environments? By bridging the gap between intricate multi-dimensional spectroscopic datasets and advanced theoretical photoionization models, I develop custom computational pipelines to untangle AGN radiation from true gas-phase abundances. Ultimately, my work pioneers robust new metallicity calibrations and diagnostic tools that allow wider applications to decode complex AGN feedback mechanisms.
 
 affiliations:
   - name: Universidade do Vale do Paraíba (UNIVAP)
