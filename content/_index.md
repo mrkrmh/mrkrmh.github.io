@@ -12,7 +12,6 @@ design:
 sections:
   - block: resume-biography-3
     content:
-      title: Research Profile      # <-- This overrides the hidden default
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: me
       text: ''
@@ -21,7 +20,7 @@ sections:
         text: Download CV
         url: uploads/resume.pdf
       headings:
-        about: ''
+        about: "Research Profile"    # <-- This controls that specific heading!
         education: ''
         interests: ''
     design:
