@@ -46,7 +46,6 @@ sections:
         
         Using the **Cloudy** spectral synthesis code and photoionization models, I develop metallicity calibrations to accurately determine the chemical abundances in ionized gas. I am particularly interested in how these processes impact galaxy evolution across cosmic time.
 
-        #Please reach out to collaborate 😃
     design:
       columns: '1'
   - block: collection
