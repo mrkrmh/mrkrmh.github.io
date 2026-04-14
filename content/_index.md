@@ -12,7 +12,6 @@ design:
 sections:
   - block: resume-biography-3
     content:
-      title: Research Profile
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: me
       text: ''
