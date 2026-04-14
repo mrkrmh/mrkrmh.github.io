@@ -45,6 +45,11 @@ links:
     url: https://scholar.google.com.br/citations?user=QPfeYDQAAAAJ&hl=en
   - icon: academicons/orcid
     url: https://orcid.org/0000-0002-9746-3938
+  - icon: cv
+    icon_pack: ai
+    name: Download CV
+    url: /uploads/resume.pdf
+  # ... your existing links ...
 
 research interests:
   - Active Galactic Nuclei (AGNs)
