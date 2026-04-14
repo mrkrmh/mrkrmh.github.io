@@ -2,7 +2,7 @@ schema: hugoblox/author/v1
 slug: me
 # Add this near the top, under slug: me
 avatar:
-  url: "/avatar.jpeg"
+  url: "/avatar.jpg"
 is_owner: true
 name:
   display: Mark Armah
