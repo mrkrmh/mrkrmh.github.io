@@ -16,7 +16,7 @@ hugoblox:
     name: "Mark Armah"
     # To activate pass_pix.jpeg as your profile picture add these 3 lines below:
     avatar:
-      image: "pass_pix.jpeg"
+      image: "me.png"
       shape: circle # Options: circle, square, rounded
     # Legal entity for copyright notices (defaults to name if not set)
     organization: ""
