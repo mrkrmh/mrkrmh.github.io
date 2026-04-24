@@ -13,11 +13,12 @@ sections:
     content:
       title: Selected Projects
       text: "Selected peer-reviewed publications and research highlights."
-       sort_by: 'Date'
-       sort_ascending: false
       filters:
         folders:
           - projects
+      # Forces Hugo to sort by the 'date' field in your project folders, newest first
+      sort_by: 'Date'
+      sort_ascending: false
     design:
       view: article-grid
       fill_image: false
