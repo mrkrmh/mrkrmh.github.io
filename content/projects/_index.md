@@ -22,7 +22,7 @@ sections:
     design:
       view: article-grid
       fill_image: true     # <-- Changed to true (crops images uniformly)
-      columns: 2           # <-- Changed to 2 columns (perfect for 4 items)
+      columns: 3           # <-- Changed to 2 columns (perfect for 4 items)
       show_date: false
       show_read_time: false
       show_read_more: false
