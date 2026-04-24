@@ -1,6 +1,6 @@
 ---
 title: "Metallicity Calibrations in AGNs: N₂O₂ and N₂S₂ Diagnostics"
-summary: "Developing new semi-empirical metallicity calibrations that successfully decouple true gas-phase chemical abundances from structural nebular variations driven by the X-ray radiation field."
+summary: "Developing new semi-empirical metallicity calibrations that successfully decouple true gas-phase chemical abundances from structural nebular variations driven by the X-ray radiation field using N₂O₂ and N₂S₂."
 tags:
   - AGN Diagnostics
   - Python Pipelines
