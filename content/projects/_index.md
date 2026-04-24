@@ -12,7 +12,9 @@ sections:
   - block: collection
     content:
       title: Selected Projects
-      text: I enjoy making things. Here are a selection of projects that I have worked on over the years.
+      text: "Selected peer-reviewed publications and research highlights."
+       sort_by: 'Date'
+       sort_ascending: false
       filters:
         folders:
           - projects
