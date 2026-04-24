@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neon Abundance Simulator</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #1e293b; }
+        .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .slider-group { display: flex; justify-content: space-between; align-items: center; }
+        input[type=range] { width: 60%; }
+        .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Optical vs. Infrared Neon Abundances</h2>
+        <p class="description">Illustrating the severe temperature dependence of optical [Ne III] lines compared to the stability of mid-IR fine-structure transitions.</p>
+        <div class="controls">
+            <div class="slider-group">
+                <label>Assumed Electron Temp (Tₑ): <span id="te-val">15000</span> K</label>
+                <input type="range" id="te-slider" min="10000" max="25000" step="500" value="15000">
+            </div>
+        </div>
+        <div id="plot"></div>
+    </div>
+    <script>
+        const trueNe = [7.5, 8.0, 8.5, 9.0]; // True 12+log(Ne/H)
+        function updatePlot() {
+            const Te = parseFloat(document.getElementById('te-slider').value);
+            document.getElementById('te-val').innerText = Te;
+            
+            // IR is stable, Optical varies wildly if Te is misestimated (simulated relation)
+            const irDerived = trueNe.map(ne => ne + 0.02 * (Te/10000 - 1.5)); 
+            const optDerived = trueNe.map(ne => ne - 2.5 * Math.log10(Te/15000));
+
+            const trace1 = { x: trueNe, y: irDerived, mode: 'lines+markers', name: 'IR Derived (Robust)', line: {color: '#10b981', width: 3} };
+            const trace2 = { x: trueNe, y: optDerived, mode: 'lines+markers', name: 'Optical Derived (Tₑ Dependent)', line: {color: '#ef4444', width: 2, dash: 'dash'} };
+
+            const layout = { title: 'Derived vs. True Gas-Phase Neon Abundance', xaxis: { title: 'True 12 + log(Ne/H)' }, yaxis: { title: 'Derived 12 + log(Ne/H)' } };
+            Plotly.newPlot('plot', [trace1, trace2], layout, {responsive: true});
+        }
+        document.getElementById('te-slider').addEventListener('input', updatePlot);
+        updatePlot();
+    </script>
+</body>
+</html>
