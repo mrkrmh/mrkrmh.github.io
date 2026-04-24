@@ -20,7 +20,7 @@ sections:
       sort_by: 'Date'
       sort_ascending: false
     design:
-      view: article-grid
+      view: showcase
       fill_image: false
       columns: 3
       show_date: false
