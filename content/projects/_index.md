@@ -20,9 +20,9 @@ sections:
       sort_by: 'Date'
       sort_ascending: false
     design:
-      view: showcase
-      fill_image: false
-      columns: 3
+      view: article-grid
+      fill_image: true     # <-- Changed to true (crops images uniformly)
+      columns: 2           # <-- Changed to 2 columns (perfect for 4 items)
       show_date: false
       show_read_time: false
       show_read_more: false
