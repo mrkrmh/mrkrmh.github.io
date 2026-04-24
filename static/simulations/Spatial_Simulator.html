@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFU Spatial Simulator</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>/* Same CSS as above */ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; } .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); } h2 { text-align: center; color: #1e293b; } .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; } .slider-group { display: flex; justify-content: space-between; align-items: center; } input[type=range] { width: 60%; } .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Radial Metallicity Gradients in Seyferts</h2>
+        <p class="description">Comparing the steepness of radial metallicity gradients dictated by localized AGN feedback.</p>
+        <div class="controls">
+            <div class="slider-group">
+                <label>AGN Outflow Strength: <span id="outflow-val">Moderate</span></label>
+                <input type="range" id="outflow-slider" min="0" max="2" step="1" value="1">
+            </div>
+        </div>
+        <div id="plot"></div>
+    </div>
+    <script>
+        const radius = [0, 1, 2, 3, 4, 5]; // kpc
+        function updatePlot() {
+            const outVals = ["Weak", "Moderate", "Strong"];
+            const outIdx = parseInt(document.getElementById('outflow-slider').value);
+            document.getElementById('outflow-val').innerText = outVals[outIdx];
+            
+            const gradient = radius.map(r => 9.0 - (0.05 + 0.05*outIdx) * r); 
+            const trace1 = { x: radius, y: gradient, type: 'scatter', mode: 'lines+markers', name: 'Radial Profile', line: {color: '#ec4899', width: 3} };
+
+            const layout = { title: '1D Spatial Metallicity Profile', xaxis: { title: 'Distance from Nucleus (kpc)' }, yaxis: { title: 'Gas-Phase Metallicity [12+log(O/H)]' }, yaxis: {range: [8.4, 9.2]} };
+            Plotly.newPlot('plot', [trace1], layout, {responsive: true});
+        }
+        document.getElementById('outflow-slider').addEventListener('input', updatePlot);
+        updatePlot();
+    </script>
+</body>
+</html>
