@@ -1,5 +1,5 @@
 ---
-title: "Metallicity Calibrations in AGNs: $\\rm N_2O_2$ and $\\rm N_2S_2$ Diagnostics"
+title: "Metallicity Calibrations in AGNs: N₂O₂ and N₂S₂ Diagnostics"
 summary: "Developing new semi-empirical metallicity calibrations that successfully decouple true gas-phase chemical abundances from structural nebular variations driven by the X-ray radiation field."
 tags:
   - AGN Diagnostics
