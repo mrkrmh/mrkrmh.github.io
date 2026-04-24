@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>X-ray Calibrations Simulator</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #1e293b; }
+        .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px;}
+        .slider-group { display: flex; justify-content: space-between; align-items: center; }
+        input[type=range] { width: 60%; }
+        select { width: 60%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1em;}
+        .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>X-ray Parameterized N₂ & O₃N₂ Calibrations</h2>
+        <p class="description">Demonstrating how the relationship between strong-line diagnostics and true metallicity shifts intrinsically with 2-10 keV X-ray luminosity.</p>
+        <div class="controls">
+            <div class="slider-group">
+                <label>Select Diagnostic Ratio:</label>
+                <select id="diag-select">
+                    <option value="N2">N₂ ([N II] / Hα)</option>
+                    <option value="O3N2">O₃N₂ ([O III]/Hβ / [N II]/Hα)</option>
+                </select>
+            </div>
+            <div class="slider-group">
+                <label>Intrinsic X-ray Luminosity (Log Lₓ): <span id="lx-val">42.5</span></label>
+                <input type="range" id="lx-slider" min="41.0" max="45.0" step="0.5" value="42.5">
+            </div>
+        </div>
+        <div id="plot"></div>
+    </div>
+    <script>
+        const metallicity = [8.0, 8.2, 8.4, 8.6, 8.8, 9.0]; 
+        function updatePlot() {
+            const lx = parseFloat(document.getElementById('lx-slider').value);
+            const diag = document.getElementById('diag-select').value;
+            document.getElementById('lx-val').innerText = lx.toFixed(1);
+            
+            let ratioVals = [];
+            let yLabel = '';
+            let traceName = '';
+            let lineColor = '';
+
+            if (diag === 'N2') {
+                // Simulated N2 scaling
+                ratioVals = metallicity.map(z => 1.5 * (z - 8.0) - 1.0 + (lx - 42)*0.3);
+                yLabel = 'Log ([N II] λ6584 / Hα)';
+                traceName = `N₂ curve at Log Lx=${lx.toFixed(1)}`;
+                lineColor = '#f97316';
+            } else {
+                // Simulated O3N2 scaling (inverse relation)
+                ratioVals = metallicity.map(z => -1.2 * (z - 8.0) + 2.0 - (lx - 42)*0.25);
+                yLabel = 'Log (O₃N₂)';
+                traceName = `O₃N₂ curve at Log Lx=${lx.toFixed(1)}`;
+                lineColor = '#3b82f6';
+            }
+
+            const trace1 = { x: metallicity, y: ratioVals, mode: 'lines+markers', name: traceName, line: {color: lineColor, width: 3, shape: 'spline'} };
+
+            const layout = { 
+                title: `${diag === 'N2' ? 'N₂' : 'O₃N₂'} Diagnostic vs Gas-Phase Metallicity`, 
+                xaxis: { title: '12 + log(O/H)' }, 
+                yaxis: { title: yLabel, range: [-2.0, 2.5] },
+                margin: { t: 40, b: 40, l: 50, r: 20 },
+                legend: { orientation: 'h', y: -0.2 }
+            };
+            Plotly.newPlot('plot', [trace1], layout, {responsive: true});
+        }
+        document.getElementById('lx-slider').addEventListener('input', updatePlot);
+        document.getElementById('diag-select').addEventListener('change', updatePlot);
+        updatePlot();
+    </script>
+</body>
+</html>
