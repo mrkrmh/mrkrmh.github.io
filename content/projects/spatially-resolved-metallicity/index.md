@@ -7,8 +7,9 @@ tags:
   - Spatially Resolved
 date: "2024-10-01T00:00:00Z"
 math: true
-external_link: "https://doi.org/10.1093/mnras/stae2263"
+# external_link: "https://doi.org/10.1093/mnras/stae2263"
 ---
+**[Read the full published paper here](https://doi.org/10.1093/mnras/stae2263)**
 
 Moving beyond integrated single-fiber spectra, this project utilizes Integral Field Unit (IFU) data to map the chemical composition of Seyfert galaxies in 2D. This spatially resolved approach reveals how gas-phase metallicity fluctuates across different galactic regions and provides deep insights into how localized AGN outflows and inflows dictate chemical evolution.
 ### Interactive IFU Profile Simulator
