@@ -5,7 +5,7 @@ tags:
   - Seyfert Galaxies
   - Infrared Astronomy
   - Extragalactic Astrophysics
-date: "2021-01-01T00:00:00Z"
+date: "2021-09-16T00:00:00Z"
 math: true
 ---
 **[Read the full published paper here](https://doi.org/10.1093/mnras/stab2610)**
