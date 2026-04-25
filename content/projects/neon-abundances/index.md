@@ -19,8 +19,14 @@ This research bridges the gap between optical and infrared observational dataset
 
 ### Interactive Figure 5: Nebular Structure Profiles
 
-The interactive plot below reproduces the *Cloudy* photoionization models from the 2021 publication, comparing the internal gas structure ionized by an AGN (red solid line) versus a star-forming H <span style="font-variant: small-caps;">ii</span> region (blue dashed line). 
+The interactive plot below reproduces the *Cloudy* photoionization models from our 2021 publication. It compares the internal gas structure of a cloud ionized by an AGN (red solid line, hard X-ray power-law) versus a star-forming H <span style="font-variant: small-caps;">ii</span> region (blue dashed line, stellar SED) across a normalized radius ($R/R_{\rm e}$). 
 
-Hover over the curves to see the exact fractional abundances and temperatures at any given depth ($R/R_{\rm e}$). Notice how the stellar ionizing radiation of the H <span style="font-variant: small-caps;">ii</span> region produces a sharp Strömgren boundary, whereas the hard X-ray power-law of the AGN creates a highly extended partially ionized zone. Furthermore, the deep penetration of X-rays in the AGN model drives a distinct secondary peak in the electron temperature ($T_{\rm e}$) near the outer edge of the cloud.
+Because the axes are normalized to the total radius of the cloud ($R_{\rm e}$), the physical differences between a Strömgren sphere (H <span style="font-variant: small-caps;">ii</span>) and an extended Partially Ionized Zone (AGN) become starkly apparent:
+
+* **Top Panel (Ne²⁺/Ne):** The AGN model actually achieves a higher initial ionization fraction near the illuminated face compared to the stellar model. However, because the AGN's total volume is dominated by a massive Partially Ionized Zone (PIZ), the highly ionized Ne²⁺ fraction drops off rapidly on the normalized scale, physically crossing the H <span style="font-variant: small-caps;">ii</span> line at $R/R_{\rm e} \approx 0.55$. 
+* **Middle Panel (O²⁺/O):** The H <span style="font-variant: small-caps;">ii</span> region exhibits the classic behavior of a Strömgren sphere: the highly ionized species fill nearly the entire volume, creating a flat plateau until the sharp boundary drop-off at $R_{\rm e}$. Conversely, the AGN model exhibits a convex decay, with O²⁺ squashed into the inner region.
+* **Bottom Panel (Electron Temperature, $T_{\rm e}$):** This panel reveals the most critical physical distinction. The AGN temperature starts high at the illuminated face, dips rapidly around $R/R_{\rm e} \approx 0.1$ (where O²⁺ and Ne²⁺ cooling is highly efficient), and then spikes dramatically. It remains extremely hot ($\sim 1.5 \times 10^4$ K) across the remaining 80% of the radius because the deeply penetrating X-rays continue to heat the PIZ where line-cooling is inefficient. The H <span style="font-variant: small-caps;">ii</span> region, lacking hard X-rays, maintains a relatively flat, cooler temperature profile.
+
+*(Hover over the curves to see the exact fractional abundances and temperatures at any given depth).*
 
 <iframe src="/simulations/Nebular_Structure_Profiles.html" width="100%" height="830px" style="border:none; border-radius: 12px;"></iframe>
