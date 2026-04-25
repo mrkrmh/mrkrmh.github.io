@@ -2,9 +2,9 @@
 title: "Oxygen Abundances & The Metallicity-Luminosity Relation"
 summary: "Investigating the metallicity-luminosity relation in Seyfert galaxies by combining optical emission line datasets with advanced CLOUDY photoionization models."
 tags:
-  - Active Galactic Nuclei
+  - Metallicity-Luminosity Relation in AGNs
   - Chemical Abundances
-  - Photoionization Modeling
+  - X-ray Astronomy
 date: "2023-01-20T00:00:00Z"
 math: true
 
