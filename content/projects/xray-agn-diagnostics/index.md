@@ -7,7 +7,7 @@ tags:
   - Interactive Modeling
 
 # CRITICAL FIX: This date MUST be in the past (e.g., 2024) for Hugo to build the page!
-date: "2024-05-20T00:00:00Z" 
+date: "2025-05-20T00:00:00Z" 
 math: true
 
 # This creates a clean button right under your title
@@ -21,9 +21,9 @@ Standard strong-line diagnostics are often heavily biased by the intense radiati
 ### Interactive Calibrations
 
 **N₂O₂ Simulator**
-*Demonstrating the robustness of the [N II]/[O II] ratio against X-ray luminosity variations compared to traditional diagnostics.*
+Demonstrating the robustness of the [N II]/[O II] ratio against X-ray luminosity variations compared to traditional diagnostics.
 <iframe src="/simulations/N2O2_Clean_Diagnostic.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
 
 **N₂S₂ Simulator**
-*Illustrating the volume-canceling properties of the [N II]/[S II] ratio and its independence from electron density fluctuations.*
+Illustrating the volume-canceling properties of the [N II]/[S II] ratio and its independence from electron density fluctuations.
 <iframe src="/simulations/N2S2_Interactive_Pro.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
