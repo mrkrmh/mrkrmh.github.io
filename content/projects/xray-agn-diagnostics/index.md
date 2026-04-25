@@ -21,9 +21,9 @@ Standard strong-line diagnostics are often heavily biased by the intense radiati
 ### Interactive Calibrations
 
 **N₂O₂ Simulator**
-Demonstrating the robustness of the $\rm [N~\\textsc{ii}]/[O~\\textsc{ii}]$ ratio against X-ray luminosity variations compared to traditional diagnostics.
+Demonstrating the robustness of the $\text{[N\,\textsc{ii}]}/\text{[O\,\textsc{ii}]}$ ratio against X-ray luminosity variations compared to traditional diagnostics.
 <iframe src="/simulations/N2O2_Clean_Diagnostic.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
 
 **N₂S₂ Simulator**
-Illustrating the volume-canceling properties of the $\rm [N~\\textsc{ii}]/[S~\\textsc{ii}]$ ratio and its independence from electron density fluctuations.
+Illustrating the volume-canceling properties of the $\text{[N\,\textsc{ii}]}/\text{[S\,\textsc{ii}]}$ ratio and its independence from electron density fluctuations.
 <iframe src="/simulations/N2S2_Interactive_Pro.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
