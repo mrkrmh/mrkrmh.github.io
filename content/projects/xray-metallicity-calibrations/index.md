@@ -5,7 +5,7 @@ tags:
   - X-ray Astronomy
   - AGN Diagnostics
   - Chemical Abundances
-date: "2025-04-20T00:00:00Z"
+date: "2026-03-24T00:00:00Z"
 math: true
 # external_link: "https://doi.org/10.1093/mnras/stag560"
 ---
