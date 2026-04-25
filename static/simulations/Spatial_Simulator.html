@@ -17,10 +17,10 @@
 <body>
     <div class="container">
         <h2>Radial Metallicity Gradients: Seyferts vs. Controls</h2>
-        <p class="description">Simulating the flattening and inversion of radial metallicity gradients in the inner regions (R < 1.5 Re) due to AGN-driven gas mixing.</p>
+        <p class="description">Simulating the flattening and inversion of radial metallicity gradients in the inner regions (R &lt; 1.5 Re) due to AGN-driven gas mixing.</p>
         <div class="controls">
             <div class="slider-group">
-                <label>Galaxy Type / Gas Mixing: <span id="mixing-val">Control Galaxy (No Mixing)</span></label>
+                <label>Galaxy Type / Gas Mixing: <br><strong id="mixing-val" style="color:#2563eb;">Control Galaxy (Steep Negative)</strong></label>
                 <input type="range" id="mixing-slider" min="0" max="2" step="0.1" value="0">
             </div>
         </div>
@@ -33,30 +33,43 @@
         function updatePlot() {
             const mixLevel = parseFloat(document.getElementById('mixing-slider').value);
             
-            let label = "Control Galaxy (Steep Negative)";
-            if (mixLevel > 0.5 && mixLevel <= 1.5) label = "Seyfert (Flattened Gradient)";
-            if (mixLevel > 1.5) label = "Seyfert (Inverted Gradient)";
-            document.getElementById('mixing-val').innerText = label;
+            let label = "Control Galaxy (Steep Negative Gradient)";
+            let labelColor = "#2563eb"; // Blue
             
-            // MATH UPDATE based on stae2263.pdf:
-            // mixLevel 0 (Control) -> High central Z, steep drop (e.g., 8.8 -> 8.65)
-            // mixLevel 2 (Strong AGN) -> Lower central Z, rises slightly (e.g., 8.5 -> 8.57)
+            if (mixLevel > 0.5 && mixLevel <= 1.5) {
+                label = "Seyfert (Flattened Gradient)";
+                labelColor = "#8b5cf6"; // Purple
+            }
+            if (mixLevel > 1.5) {
+                label = "Seyfert (Inverted / Positive Gradient)";
+                labelColor = "#ef4444"; // Red
+            }
+            
+            const labelElement = document.getElementById('mixing-val');
+            labelElement.innerText = label;
+            labelElement.style.color = labelColor;
+            
+            // PHYSICS MATH:
+            // mixLevel 0 (Control): Central Z = 8.8, Outer Z = 8.5 (Negative Slope)
+            // mixLevel 1 (Flattened): Central Z = 8.65, Outer Z = 8.6 (Nearly Flat)
+            // mixLevel 2 (Inverted): Central Z = 8.5, Outer Z = 8.7 (Positive Slope)
+            
             const intercept = 8.8 - (0.15 * mixLevel);
-            const slope = -0.15 + (0.1 * mixLevel); 
+            const slope = -0.2 + (0.1666 * mixLevel); 
             
             const gradient = radius.map(r => intercept + (slope * r)); 
             
-            // Dynamic color: Blue for control, transitioning to Red for strong AGN
-            const red = Math.floor(mixLevel * 100) + 50;
-            const blue = 200 - Math.floor(mixLevel * 100);
-            const lineColor = `rgb(${red}, 50, ${blue})`;
+            // Dynamic Line Color: Blue (Control) -> Purple (Flattened) -> Red (Inverted)
+            const rColor = Math.floor((mixLevel / 2) * 239); 
+            const bColor = Math.floor((1 - (mixLevel / 2)) * 235 + 20); 
+            const lineColor = `rgb(${rColor}, 50, ${bColor})`;
 
             const trace1 = { 
                 x: radius, 
                 y: gradient, 
                 mode: 'lines+markers', 
                 name: 'Radial Profile', 
-                line: {color: lineColor, width: 3, shape: 'spline'} 
+                line: {color: lineColor, width: 4, shape: 'spline'} 
             };
 
             const layout = { 
@@ -64,11 +77,12 @@
                 xaxis: { title: 'Radius (R / R_e)' }, 
                 yaxis: { title: 'Gas-Phase Metallicity [12+log(O/H)]', range: [8.4, 8.9] } 
             };
-            Plotly.newPlot('plot', [trace1], layout, {responsive: true});
+            
+            Plotly.react('plot', [trace1], layout, {responsive: true});
         }
         
         document.getElementById('mixing-slider').addEventListener('input', updatePlot);
-        updatePlot();
+        updatePlot(); // Initialize plot on load
     </script>
 </body>
 </html>
