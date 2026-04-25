@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <title>Metallicity-Luminosity Simulator</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    <style>/* Use the exact same CSS block from the simulator above */ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; } .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); } h2 { text-align: center; color: #1e293b; } .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; } .slider-group { display: flex; justify-content: space-between; align-items: center; } input[type=range] { width: 60%; } .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }</style>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #1e293b; }
+        .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .slider-group { display: flex; justify-content: space-between; align-items: center; }
+        input[type=range] { width: 60%; }
+        .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Seyfert Metallicity-Luminosity Relation</h2>
-        <p class="description">Simulating the shift in the L-Z relation based on varying theoretical accretion efficiencies.</p>
+        <h2>Seyfert Metallicity-Luminosity Anti-Correlation</h2>
+        <p class="description">Simulating the observed negative correlation between bolometric luminosity and gas-phase metallicity, driven by AGN feedback and gas depletion.</p>
         <div class="controls">
             <div class="slider-group">
-                <label>Accretion Efficiency Factor: <span id="eff-val">1.0</span></label>
+                <label>AGN Feedback/Outflow Strength: <span id="eff-val">1.0</span></label>
                 <input type="range" id="eff-slider" min="0.5" max="2.0" step="0.1" value="1.0">
             </div>
         </div>
@@ -20,16 +28,31 @@
     </div>
     <script>
         const logL = [42, 43, 44, 45, 46]; 
+        
         function updatePlot() {
             const eff = parseFloat(document.getElementById('eff-slider').value);
             document.getElementById('eff-val').innerText = eff.toFixed(1);
             
-            const zRelation = logL.map(l => 8.5 + 0.2 * (l - 42) * (1/eff)); 
-            const trace1 = { x: logL, y: zRelation, mode: 'lines+markers', name: 'Theoretical L-Z Fit', line: {color: '#8b5cf6', width: 3, shape: 'spline'} };
+            // CORRECTED PHYSICS: Negative slope. As L increases, Metallicity drops. 
+            // Stronger feedback (eff > 1) = steeper drop in retained metals.
+            const zRelation = logL.map(l => 9.1 - 0.15 * (l - 42) * eff); 
+            
+            const trace1 = { 
+                x: logL, 
+                y: zRelation, 
+                mode: 'lines+markers', 
+                name: 'Observed L-Z Anti-Correlation', 
+                line: {color: '#8b5cf6', width: 3, shape: 'spline'} 
+            };
 
-            const layout = { title: 'Luminosity vs. Oxygen Abundance', xaxis: { title: 'Log Bolometric Luminosity (erg/s)' }, yaxis: { title: '12 + log(O/H)' } };
+            const layout = { 
+                title: 'Bolometric Luminosity vs. Oxygen Abundance', 
+                xaxis: { title: 'Log Bolometric Luminosity (erg/s)' }, 
+                yaxis: { title: '12 + log(O/H)', range: [8.0, 9.4] } 
+            };
             Plotly.newPlot('plot', [trace1], layout, {responsive: true});
         }
+        
         document.getElementById('eff-slider').addEventListener('input', updatePlot);
         updatePlot();
     </script>
