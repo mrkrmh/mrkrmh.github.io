@@ -6,10 +6,11 @@ tags:
   - Chemical Abundances
   - Photoionization Modeling
 date: "2023-01-01T00:00:00Z"
-
+math: true
 # Optional external URL for project (e.g. link to paper)
-external_link: "https://doi.org/10.1093/mnras/stad217"
+# external_link: "https://doi.org/10.1093/mnras/stad217"
 ---
+**[Read the full published paper here](https://doi.org/10.1093/mnras/stad217)**
 
 By systematically analyzing the narrow line regions (NLRs) of Seyfert galaxies, this project explores how actively accreting supermassive black holes influence the gas-phase oxygen abundances in their host environments. Using state-of-the-art photoionization models, we established refined metallicity-luminosity relations crucial for understanding galaxy evolution.
 
