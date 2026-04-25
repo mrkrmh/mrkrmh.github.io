@@ -5,11 +5,25 @@ tags:
   - AGN Diagnostics
   - Python Pipelines
   - Interactive Modeling
-date: "2026-06-20T00:00:00Z" 
-math: true
-# Link this to your interactive talk page!
-# external_link: "/event/agn-diagnostics-2026/"
----
-**[Read the upcoming 2026 publication here](https://doi.org/10.1093/mnras/stag560)**
 
-Standard strong-line diagnostics are often heavily biased by the intense radiation fields of AGNs. This ongoing project focuses on deriving new metallicity calibrations—specifically utilizing the $\rm N_2O_2$ and $\rm N_2S_2$ emission line ratios—that remain unaffected by structural nebular variations. By parameterizing models explicitly by intrinsic 2-10 keV X-ray luminosity, these tools lay the groundwork for analyzing high-resolution spectra from next-generation observatories.
+# CRITICAL FIX: This date MUST be in the past (e.g., 2024) for Hugo to build the page!
+date: "2024-05-20T00:00:00Z" 
+math: true
+
+# This creates a clean button right under your title
+links:
+  - name: "📄 Read Upcoming 2026 Publication"
+    url: "https://doi.org/10.1093/mnras/stag560"
+---
+
+Standard strong-line diagnostics are often heavily biased by the intense radiation fields of AGNs. This ongoing project focuses on deriving new metallicity calibrations—specifically utilizing the N₂O₂ and N₂S₂ emission line ratios—that remain unaffected by structural nebular variations. By parameterizing models explicitly by intrinsic 2-10 keV X-ray luminosity, these tools lay the groundwork for analyzing high-resolution spectra from next-generation observatories.
+
+### Interactive Calibrations
+
+**N₂O₂ Simulator**
+*Demonstrating the robustness of the [N II]/[O II] ratio against X-ray luminosity variations compared to traditional diagnostics.*
+<iframe src="/simulations/N2O2_Simulator.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
+
+**N₂S₂ Simulator**
+*Illustrating the volume-canceling properties of the [N II]/[S II] ratio and its independence from electron density fluctuations.*
+<iframe src="/simulations/N2S2_Simulator.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
