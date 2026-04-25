@@ -16,3 +16,8 @@ This research bridges the gap between optical and infrared observational dataset
 *Explore the temperature dependence of optical derivations versus infrared derivations.*
 
 <iframe src="/simulations/Neon_Simulator.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
+
+### Figure 5: Resolving the Neon Discrepancy
+*Use the dropdown below to observe how applying the corrected $\rm Ne^{2+}$ zone temperature ($T_{\rm e}[\rm NeIII]$) pulls the optical derivations into agreement with the infrared benchmark, reducing the discrepancy (D) by a factor of nearly 3.*
+
+<iframe src="/simulations/Neon_Discrepancy_Simulator.html" width="100%" height="600px" style="border:none; border-radius: 12px;"></iframe>
