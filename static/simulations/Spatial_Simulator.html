@@ -4,34 +4,70 @@
     <meta charset="UTF-8">
     <title>IFU Spatial Simulator</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    <style>/* Same CSS as above */ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; } .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); } h2 { text-align: center; color: #1e293b; } .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; } .slider-group { display: flex; justify-content: space-between; align-items: center; } input[type=range] { width: 60%; } .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }</style>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #1e293b; }
+        .controls { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .slider-group { display: flex; justify-content: space-between; align-items: center; }
+        input[type=range] { width: 60%; }
+        .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Radial Metallicity Gradients in Seyferts</h2>
-        <p class="description">Comparing the steepness of radial metallicity gradients dictated by localized AGN feedback.</p>
+        <h2>Radial Metallicity Gradients: Seyferts vs. Controls</h2>
+        <p class="description">Simulating the flattening and inversion of radial metallicity gradients in the inner regions (R < 1.5 Re) due to AGN-driven gas mixing.</p>
         <div class="controls">
             <div class="slider-group">
-                <label>AGN Outflow Strength: <span id="outflow-val">Moderate</span></label>
-                <input type="range" id="outflow-slider" min="0" max="2" step="1" value="1">
+                <label>Galaxy Type / Gas Mixing: <span id="mixing-val">Control Galaxy (No Mixing)</span></label>
+                <input type="range" id="mixing-slider" min="0" max="2" step="0.1" value="0">
             </div>
         </div>
         <div id="plot"></div>
     </div>
     <script>
-        const radius = [0, 1, 2, 3, 4, 5]; // kpc
+        // R / Re (Effective Radius)
+        const radius = [0, 0.3, 0.6, 0.9, 1.2, 1.5]; 
+        
         function updatePlot() {
-            const outVals = ["Weak", "Moderate", "Strong"];
-            const outIdx = parseInt(document.getElementById('outflow-slider').value);
-            document.getElementById('outflow-val').innerText = outVals[outIdx];
+            const mixLevel = parseFloat(document.getElementById('mixing-slider').value);
             
-            const gradient = radius.map(r => 9.0 - (0.05 + 0.05*outIdx) * r); 
-            const trace1 = { x: radius, y: gradient, type: 'scatter', mode: 'lines+markers', name: 'Radial Profile', line: {color: '#ec4899', width: 3} };
+            let label = "Control Galaxy (Steep Negative)";
+            if (mixLevel > 0.5 && mixLevel <= 1.5) label = "Seyfert (Flattened Gradient)";
+            if (mixLevel > 1.5) label = "Seyfert (Inverted Gradient)";
+            document.getElementById('mixing-val').innerText = label;
+            
+            // MATH UPDATE based on stae2263.pdf:
+            // mixLevel 0 (Control) -> High central Z, steep drop (e.g., 8.8 -> 8.65)
+            // mixLevel 2 (Strong AGN) -> Lower central Z, rises slightly (e.g., 8.5 -> 8.57)
+            const intercept = 8.8 - (0.15 * mixLevel);
+            const slope = -0.15 + (0.1 * mixLevel); 
+            
+            const gradient = radius.map(r => intercept + (slope * r)); 
+            
+            // Dynamic color: Blue for control, transitioning to Red for strong AGN
+            const red = Math.floor(mixLevel * 100) + 50;
+            const blue = 200 - Math.floor(mixLevel * 100);
+            const lineColor = `rgb(${red}, 50, ${blue})`;
 
-            const layout = { title: '1D Spatial Metallicity Profile', xaxis: { title: 'Distance from Nucleus (kpc)' }, yaxis: { title: 'Gas-Phase Metallicity [12+log(O/H)]' }, yaxis: {range: [8.4, 9.2]} };
+            const trace1 = { 
+                x: radius, 
+                y: gradient, 
+                mode: 'lines+markers', 
+                name: 'Radial Profile', 
+                line: {color: lineColor, width: 3, shape: 'spline'} 
+            };
+
+            const layout = { 
+                title: '1D Spatial Metallicity Profile', 
+                xaxis: { title: 'Radius (R / R_e)' }, 
+                yaxis: { title: 'Gas-Phase Metallicity [12+log(O/H)]', range: [8.4, 8.9] } 
+            };
             Plotly.newPlot('plot', [trace1], layout, {responsive: true});
         }
-        document.getElementById('outflow-slider').addEventListener('input', updatePlot);
+        
+        document.getElementById('mixing-slider').addEventListener('input', updatePlot);
         updatePlot();
     </script>
 </body>
