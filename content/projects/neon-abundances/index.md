@@ -17,11 +17,6 @@ This research bridges the gap between optical and infrared observational dataset
 
 <iframe src="/simulations/Neon_Simulator.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
 
-### Figure 5: Resolving the Neon Discrepancy
-##*Use the dropdown below to observe how applying the corrected $\rm Ne^{2+}$ zone temperature ($T_{\rm e}[\rm NeIII]$) pulls the optical derivations into agreement with the infrared benchmark, reducing the discrepancy (D) by a factor of nearly 3.*
-
-##<iframe src="/simulations/Neon_Discrepancy_Simulator.html" width="100%" height="600px" style="border:none; border-##radius: 12px;"></iframe>
-
 ### Interactive Figure 5: Nebular Structure Profiles
 
 The interactive plot below reproduces the *Cloudy* photoionization models from the 2021 publication, comparing the internal gas structure ionized by an AGN (red solid line) versus a star-forming H <span style="font-variant: small-caps;">ii</span> region (blue dashed line). 
