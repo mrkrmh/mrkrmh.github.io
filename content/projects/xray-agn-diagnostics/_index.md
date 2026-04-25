@@ -5,7 +5,7 @@ tags:
   - AGN Diagnostics
   - Python Pipelines
   - Interactive Modeling
-date: "2024-05-20T00:00:00Z" 
+date: "2026-06-20T00:00:00Z" 
 math: true
 # Link this to your interactive talk page!
 # external_link: "/event/agn-diagnostics-2026/"
