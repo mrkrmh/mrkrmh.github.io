@@ -14,7 +14,7 @@ links:
     url: "https://doi.org/10.1093/mnras/stae2263"
 ---
 
-Moving beyond integrated single-fiber spectra, this project utilizes Integral Field Unit (IFU) data from the MaNGA survey to map the chemical composition of Seyfert galaxies in 2D. This spatially resolved approach reveals how gas-phase metallicity fluctuates across different galactic regions. Specifically, we demonstrate that AGN-driven outflows and inflows effectively mix the gas, leading to flatter or even inverted metallicity gradients in the central regions compared to inactive control galaxies.
+Moving beyond integrated single-fiber spectra, this project utilizes optical Integral Field Unit (IFU) observations from the Gemini Multi-Object Spectrograph (GMOS) and the Multi Unit Spectroscopic Explorer (MUSE) to map the 2D chemical composition of 15 nearby Seyfert galaxies (comprising 9 GMOS and 6 MUSE datasets). By probing the inner few hundred parsecs, this spatially resolved approach reveals exactly how gas-phase metallicity fluctuates within the active nucleus. Specifically, we demonstrate that these local Seyferts exhibit positive (inverted) metallicity radial profiles over extended periods due to seamless gas accretion histories. Furthermore, our spatially resolved data establishes a clear anti-correlation between the central gas-phase metallicity and the AGN's Eddington ratio.
 
 ### Interactive IFU Radial Profile Simulator
 *Compare the steep negative gradient of a normal star-forming control galaxy to the flattened and inverted gradients caused by AGN gas mixing.*
