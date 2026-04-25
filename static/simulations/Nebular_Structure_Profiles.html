@@ -22,32 +22,40 @@
         const hTe=[], hO2=[], hNe2=[]; 
         const aTe=[], aO2=[], aNe2=[]; 
         
-        for(let i=0; i<=200; i++) {
-            let xv = i/200;
+        for(let i=0; i<=500; i++) { // Increased resolution for smoother peaks
+            let xv = i/500;
             x.push(xv);
             
-            // H II Region (Stellar): High fraction up to the Stromgren boundary (R_e), then sharp drop
-            let h_front = xv <= 0.98 ? 1 : Math.exp(-200 * (xv - 0.98));
-            hO2.push(0.96 * h_front);
-            hNe2.push(0.90 * h_front);
-            hTe.push(0.85 * h_front);
-
-            // AGN Region (Power Law): Gradual decline in the partially ionized zone
-            let a_O = 0.98 * (1 - Math.pow(xv, 3)); 
-            let a_Ne = 0.94 * (1 - Math.pow(xv, 2.5));
-            aO2.push(Math.max(0, a_O));
-            aNe2.push(Math.max(0, a_Ne));
+            // ==========================================
+            // H II REGION (Blue Dashed)
+            // ==========================================
+            // Flat plateaus with an aggressive Stromgren drop-off exactly at the boundary
+            let h_drop = (1 - Math.pow(xv, 150)); 
             
-            // AGN Te: Secondary temperature peak due to deep X-ray heating
-            let a_T = 0.95 - 0.15*xv + 0.55 * Math.exp(-40 * Math.pow(xv - 0.9, 2));
-            if (xv > 0.98) a_T = a_T * Math.exp(-150 * (xv - 0.98));
-            aTe.push(a_T);
+            hNe2.push(0.85 * h_drop); // Stays at 0.85
+            hO2.push(1.0 * h_drop);   // Stays at 1.0
+            hTe.push(0.85 * h_drop);  // Stays at 0.85
+
+            // ==========================================
+            // AGN REGION (Red Solid)
+            // ==========================================
+            // Ne2+: Starts high (~1.0), drops rapidly (power 1.8), crosses H II line
+            aNe2.push(1.0 * (1 - Math.pow(xv, 1.8)));
+            
+            // O2+: Starts high (~1.0), holds longer (convex power 4), then drops
+            aO2.push(1.0 * (1 - Math.pow(xv, 4.0)));
+            
+            // Te: Starts at ~1.05, dips in the middle, massive peak to ~1.4 near edge, then drops
+            // Modeled using a base linear decline + a strong Gaussian peak at x=0.94
+            let te_base = 1.05 - 0.35 * xv; 
+            let te_peak = 0.75 * Math.exp(-60 * Math.pow(xv - 0.94, 2));
+            let agn_te = (te_base + te_peak) * (1 - Math.pow(xv, 60)); // Sharp boundary drop
+            aTe.push(Math.max(0, agn_te));
         }
 
         const lineAGN = { color: '#d32f2f', width: 2.5 }; // Red Solid
         const lineHII = { color: '#1976d2', width: 2.5, dash: 'dash' }; // Blue Dashed
 
-        // Assigning specific X and Y axes to create perfect stacked bounding boxes
         const traceNe_AGN = { x: x, y: aNe2, mode: 'lines', name: 'AGN', line: lineAGN, xaxis: 'x3', yaxis: 'y3', legendgroup: 'agn' };
         const traceNe_HII = { x: x, y: hNe2, mode: 'lines', name: 'H II region', line: lineHII, xaxis: 'x3', yaxis: 'y3', legendgroup: 'hii' };
 
@@ -74,7 +82,7 @@
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             yaxis: { 
-                title: '<b>T<sub>e</sub> (10<sup>4</sup> K)</b>', domain: [0, 0.333], range: [0.4, 1.6],
+                title: '<b>T<sub>e</sub> (10<sup>4</sup> K)</b>', domain: [0, 0.333], range: [0.4, 1.6], tick0: 0.5, dtick: 0.5,
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             
@@ -84,7 +92,7 @@
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             yaxis2: { 
-                title: '<b>O<sup>2+</sup>/O</b>', domain: [0.333, 0.666], range: [-0.05, 1.05],
+                title: '<b>O<sup>2+</sup>/O</b>', domain: [0.333, 0.666], range: [-0.05, 1.05], tick0: 0, dtick: 0.5,
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             
@@ -94,7 +102,7 @@
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             yaxis3: { 
-                title: '<b>Ne<sup>2+</sup>/Ne</b>', domain: [0.666, 1.0], range: [-0.05, 1.05],
+                title: '<b>Ne<sup>2+</sup>/Ne</b>', domain: [0.666, 1.0], range: [-0.05, 1.05], tick0: 0, dtick: 0.5,
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             }
         };
