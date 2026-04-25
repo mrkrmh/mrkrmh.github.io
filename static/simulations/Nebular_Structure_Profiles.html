@@ -22,35 +22,41 @@
         const hTe=[], hO2=[], hNe2=[]; 
         const aTe=[], aO2=[], aNe2=[]; 
         
-        for(let i=0; i<=500; i++) { // Increased resolution for smoother peaks
+        for(let i=0; i<=500; i++) {
             let xv = i/500;
             x.push(xv);
             
+            // Common boundary cutoff at exactly R/Re = 1.0
+            let edge_drop = xv <= 0.98 ? 1 : Math.exp(-200 * (xv - 0.98));
+
             // ==========================================
             // H II REGION (Blue Dashed)
             // ==========================================
-            // Flat plateaus with an aggressive Stromgren drop-off exactly at the boundary
-            let h_drop = (1 - Math.pow(xv, 150)); 
-            
-            hNe2.push(0.85 * h_drop); // Stays at 0.85
-            hO2.push(1.0 * h_drop);   // Stays at 1.0
-            hTe.push(0.85 * h_drop);  // Stays at 0.85
+            // Highly ionized species fill the entire Stromgren volume
+            hNe2.push(0.85 * edge_drop);
+            hO2.push(0.98 * edge_drop);
+
+            // Te is relatively flat, rising slightly at the edge due to radiation hardening
+            hTe.push((0.82 + 0.08 * Math.pow(xv, 4)) * edge_drop);
 
             // ==========================================
             // AGN REGION (Red Solid)
             // ==========================================
-            // Ne2+: Starts high (~1.0), drops rapidly (power 1.8), crosses H II line
-            aNe2.push(1.0 * (1 - Math.pow(xv, 1.8)));
+            // The massive PIZ dominates Re. Highly ionized species are squashed into the inner 20%
+            let a_Ne = 1.0 * Math.exp(-40 * Math.pow(xv, 1.5));
+            let a_O  = 1.0 * Math.exp(-25 * Math.pow(xv, 1.5));
+            aNe2.push(Math.max(0, a_Ne));
+            aO2.push(Math.max(0, a_O));
+
+            // AGN Temperature (Te) Physics:
+            // 1. Starts high at illuminated face
+            // 2. Dips rapidly around R/Re=0.1 due to efficient O++ and Ne++ cooling
+            // 3. Spikes and stays massively hot across the 80% PIZ due to X-ray heating
+            let a_Te_val = 1.45 
+                         + 0.15 * Math.exp(-60 * xv) 
+                         - 0.55 * Math.exp(-70 * Math.pow(xv - 0.1, 2));
             
-            // O2+: Starts high (~1.0), holds longer (convex power 4), then drops
-            aO2.push(1.0 * (1 - Math.pow(xv, 4.0)));
-            
-            // Te: Starts at ~1.05, dips in the middle, massive peak to ~1.4 near edge, then drops
-            // Modeled using a base linear decline + a strong Gaussian peak at x=0.94
-            let te_base = 1.05 - 0.35 * xv; 
-            let te_peak = 0.75 * Math.exp(-60 * Math.pow(xv - 0.94, 2));
-            let agn_te = (te_base + te_peak) * (1 - Math.pow(xv, 60)); // Sharp boundary drop
-            aTe.push(Math.max(0, agn_te));
+            aTe.push(Math.max(0, a_Te_val) * edge_drop);
         }
 
         const lineAGN = { color: '#d32f2f', width: 2.5 }; // Red Solid
@@ -82,7 +88,7 @@
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             yaxis: { 
-                title: '<b>T<sub>e</sub> (10<sup>4</sup> K)</b>', domain: [0, 0.333], range: [0.4, 1.6], tick0: 0.5, dtick: 0.5,
+                title: '<b>T<sub>e</sub> (10<sup>4</sup> K)</b>', domain: [0, 0.333], range: [0.4, 1.8], tick0: 0.5, dtick: 0.5,
                 showgrid: false, zeroline: false, linecolor: 'black', linewidth: 1.5, mirror: 'ticks', ticks: 'inside', ticklen: 6 
             },
             
