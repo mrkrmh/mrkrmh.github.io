@@ -3,9 +3,8 @@ title: "Identifying AGNs from X-ray Detections: Primary Parameter Calibrations"
 summary: "Introducing novel semi-empirical metallicity calibrations for AGNs that establish intrinsic 2-10 keV X-ray luminosity as the primary input parameter."
 tags:
   - Metallicity Calibration
-  - AGN Diagnostics
-  - Chemical Abundances
   - Photoionization Model
+  - Chemical Abundances
 date: "2026-03-24T00:00:00Z"
 math: true
 # external_link: "https://doi.org/10.1093/mnras/stag560"
