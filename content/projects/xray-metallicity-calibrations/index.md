@@ -7,8 +7,9 @@ tags:
   - Chemical Abundances
 date: "2024-05-20T00:00:00Z"
 math: true
-external_link: "https://doi.org/10.1093/mnras/stag560"
+# external_link: "https://doi.org/10.1093/mnras/stag560"
 ---
+**[Read the full published paper here](https://doi.org/10.1093/mnras/stag560)**
 
 Traditional strong-line diagnostics often struggle in Active Galactic Nuclei due to complex radiation fields. In this foundational first paper of our series on identifying AGNs from X-ray detections, we developed new metallicity calibrations (such as $\rm N_2$ and $\rm O_3N_2$) that directly account for these structural nebular variations. 
 
