@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>N2S2 Diagnostic Simulator</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #1e293b; }
+        .controls { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; padding: 15px; background: #f1f5f9; border-radius: 8px; }
+        .slider-group { display: flex; justify-content: space-between; align-items: center; }
+        input[type=range] { width: 60%; }
+        .description { font-size: 0.9em; color: #64748b; text-align: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>N₂S₂ Metallicity Diagnostic Calibration</h2>
+        <p class="description">Illustrating the volume-canceling properties of the [N II]/[S II] ratio and its independence from electron density fluctuations.</p>
+        
+        <div class="controls">
+            <div class="slider-group">
+                <label>Log Electron Density (nₑ): <span id="ne-val">2.0</span> cm⁻³</label>
+                <input type="range" id="ne-slider" min="1.0" max="4.0" step="0.1" value="2.0">
+            </div>
+        </div>
 
+        <div id="plot"></div>
+    </div>
+
+    <script>
+        const zValues = [0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
+        const logZ = zValues.map(z => Math.log10(z));
+
+        function calculateRatios(ne) {
+            // Simulated Physics: N2S2 is completely stable against density
+            const n2s2 = logZ.map(lz => 0.6 * lz - 0.4); 
+            const traditional = logZ.map(lz => 0.9 * lz + 0.1 + ((ne - 2.0) * 0.4));
+            return { n2s2, traditional };
+        }
+
+        function updatePlot() {
+            const ne = parseFloat(document.getElementById('ne-slider').value);
+            document.getElementById('ne-val').innerText = ne.toFixed(1);
+
+            const ratios = calculateRatios(ne);
+
+            const trace1 = { x: logZ, y: ratios.n2s2, mode: 'lines+markers', name: 'N₂S₂ Calibration (Stable)', line: {color: '#10b981', width: 3} };
+            const trace2 = { x: logZ, y: ratios.traditional, mode: 'lines+markers', name: 'Density-Dependent Diagnostic', line: {color: '#f59e0b', width: 2, dash: 'dash'} };
+
+            const layout = {
+                title: 'Diagnostic Ratio vs. Gas-Phase Metallicity',
+                xaxis: { title: 'Log(Z / Z_sun)' },
+                yaxis: { title: 'Log(Line Ratio)' },
+                margin: { t: 40, b: 40, l: 50, r: 20 },
+                legend: { orientation: 'h', y: -0.2 }
+            };
+
+            Plotly.newPlot('plot', [trace1, trace2], layout, {responsive: true});
+        }
+
+        document.getElementById('ne-slider').addEventListener('input', updatePlot);
+        updatePlot(); // Initial render
+    </script>
+</body>
+</html>
