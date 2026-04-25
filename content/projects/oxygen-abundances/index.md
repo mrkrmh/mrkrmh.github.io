@@ -12,3 +12,8 @@ external_link: "https://doi.org/10.1093/mnras/stad217"
 ---
 
 By systematically analyzing the narrow line regions (NLRs) of Seyfert galaxies, this project explores how actively accreting supermassive black holes influence the gas-phase oxygen abundances in their host environments. Using state-of-the-art photoionization models, we established refined metallicity-luminosity relations crucial for understanding galaxy evolution.
+
+### Interactive M-Z-L Relation Simulator
+*Simulate the shifts in the Luminosity-Metallicity relation across different theoretical accretion efficiencies.*
+
+<iframe src="/simulations/MZL_Simulator.html" width="100%" height="550px" style="border:none; border-radius: 12px;"></iframe>
