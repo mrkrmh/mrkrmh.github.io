@@ -118,13 +118,4 @@ languages:
     level: 3
     label: Intermediate
 
-awards:
-  - title: CAPES PhD Scholarship
-    awarder: CAPES
-    date: "2020-12-01"
-    summary: R$131.600,00 awarded for PhD research.
-    icon: hero/trophy
-  - title: Young Researcher Travel Support
-    awarder: AGN Winds on the Chesapeake
-    date: "2023-09-01"
-    icon: hero/academic-cap
+
